@@ -51,6 +51,7 @@ interface IEnvironments {
 
   OPENAI_API_KEY: string;
   OPENROUTER_API_KEY: string;
+  CLAUDE_CODE_CLI_BASE_URL?: string;
 }
 
 ExceptionManager.insert(Prisma.PrismaClientKnownRequestError, (exp) => {

@@ -99,6 +99,7 @@ export namespace AutoBeHackathonSessionSocketAcceptor {
         session: props.session,
       });
     const isOpenAi: boolean = props.session.model.startsWith("openai/");
+    const isClaudeCodeCli: boolean = props.session.model === "claude-code-cli";
     const agent: AutoBeAgent<"chatgpt"> = await startCommunication({
       ...props,
       histories,
@@ -110,7 +111,9 @@ export namespace AutoBeHackathonSessionSocketAcceptor {
               apiKey: isOpenAi
                 ? AutoBeHackathonConfiguration.env().OPENAI_API_KEY
                 : AutoBeHackathonConfiguration.env().OPENROUTER_API_KEY,
-              baseURL: isOpenAi ? undefined : "https://openrouter.ai/api/v1",
+              baseURL: isClaudeCodeCli
+                ? AutoBeHackathonConfiguration.env().CLAUDE_CODE_CLI_BASE_URL
+                : (isOpenAi ? undefined : "https://openrouter.ai/api/v1"),
             }),
             model: isOpenAi
               ? props.session.model.split("/").at(-1)!
